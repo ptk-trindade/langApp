@@ -18,8 +18,8 @@ class UserAuthentication:
 
 
     # Returns (user_id, ok)
-    def authenticateJwt(self, jwt) -> tuple(int, bool):
+    def authenticateJwt(self, jwt) -> int:
         # TODO
 
-        return (1, True)
+        return 1 # user_id (0 if not authenticated)
         

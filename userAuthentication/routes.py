@@ -1,11 +1,11 @@
 from flask import jsonify, request, Blueprint
 
-from models import userAuth
+from userAuthentication import UserAuthentication as userAuth
 
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/auth/login', methods=['POST'])
+@auth_bp.route('/userAuthentication/login', methods=['POST'])
 def login():
     # Validate json
     if not request.is_json:
