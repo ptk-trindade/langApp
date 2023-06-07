@@ -1,6 +1,6 @@
 from flask import jsonify, request, Blueprint
 
-from userAuthentication import UserAuthentication as userAuth
+from userAuthentication.userAuthentication import UserAuthentication
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -18,7 +18,7 @@ def login():
         return jsonify({'success': False, 'message': 'Missing password parameter'}), 400
     
     # Try to login
-    auth = userAuth.UserAuthentication()
+    auth = UserAuthentication()
     login_success = auth.login(request.json['username'], request.json['password'])
     if not login_success:
         return jsonify({'success': False, 'message': 'Invalid username or password'}), 401
