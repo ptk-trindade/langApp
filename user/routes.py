@@ -31,6 +31,9 @@ def getCardByConcept(concept_id):
     
     # TODO: Authenticate the User (by JWT)
     bearer = request.headers.get('Authorization')
+    auth = userAuthentication.UserAuthentication()
+    user_id = auth.authenticateJwt(bearer)
+
 
 
     # TODO: Get the card (CardPicking)
