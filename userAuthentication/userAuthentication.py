@@ -29,7 +29,7 @@ class UserAuthentication:
     def createJwt(self, user_id) -> str:
         payload = {"user_id": user_id}
         token = jwt.encode(payload, self.secret_key, algorithm="HS256")
-        return token.decode("utf-8")
+        return token #.decode("utf-8")
 
 
     # Returns (user_id, ok)
@@ -43,12 +43,19 @@ class UserAuthentication:
         try:
             payload = jwt.decode(jwt_token, self.secret_key, algorithms=["HS256"])
         
-        except jwt.ExpiredSignatureError:
+        except Exception as e:
+            print(e)
             return 0
-        except jwt.InvalidTokenError:
-            return 0
-
+        
 
         return payload["user_id"]
         
-        
+
+if __name__ == "__main__":
+    auth = UserAuthentication()
+    user_id = 1
+
+    token = auth.createJwt(user_id)
+    print("Token:", token)
+    user_id = auth.authenticateJwt("Bearer " + token)
+    print("Token read:", user_id)

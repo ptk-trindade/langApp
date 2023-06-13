@@ -8,12 +8,14 @@ from models.comment import Comment
 card_bp = Blueprint('card', __name__)
 
 @card_bp.route('/card/<card_id>/comment', methods=['GET'])
-def getComments(card_id: int):
+def getComments(card_id: int): # list[Comment]
     
     # TODO: Get comments
+    card = Card(card_id)
+    comments = card.getComments()
 
     # Return the comments
-    data = []
+    data = comments.toJson()
     return jsonify(data)
 
 
@@ -39,6 +41,10 @@ def postAddComment():
     auth = UserAuthentication()
     bearer = request.headers.get('Authorization')
     user_id = auth.authenticateJwt(bearer)
+
+    if user_id == 0:
+        return jsonify({'success': False, 'message': 'Invalid JWT'}), 400
+    
 
     # TODO: Add comment
     card = Card(card_id)

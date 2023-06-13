@@ -5,9 +5,17 @@ import card.db as card_db
 
 
 class Card:
-    
-    def __init__(self, card_id):
+    concepts = []
+    hasAudio = False
+    front = ''
+    back = ''
+
+    def __init__(self, card_id: int, concepts = [], hasAudio = False, front = '', back = ''):
         self.id = card_id
+        self.concepts = concepts
+        self.hasAudio = hasAudio
+        self.front = front
+        self.back = back
 
     def getComments(self) -> list[Comment]:
         
@@ -24,3 +32,22 @@ class Card:
         comment = card_db.addComment(self.id, user_id, text, parent_comment_id)
 
         return comment
+
+    def toJson(self):
+        concepts = [concept.toJson() for concept in self.concepts]
+
+        x = {
+            'concepts': [{'id': 1, 'name': 'Chair', 'description': 'Used to sit on', 'type': 'word'}],
+            'hasAudio': False,
+            'front': 'Chair',
+            'back': 'Cadeira',
+            'card_id': 123
+        }
+
+        return {
+            'concepts': [concept.toJson() for concept in self.concepts],
+            'hasAudio': self.hasAudio,
+            'front': self.front,
+            'back': self.back,
+            'card_id': self.id
+        }
