@@ -1,12 +1,12 @@
 from flask import jsonify, request, Blueprint
 
 from userAuthentication.userAuthentication import UserAuthentication
-from user.user import User
+from userCard.userCard import UserCard
 
 
 user_bp = Blueprint('user', __name__)
 
-@user_bp.route('/user/card', methods=['GET'])
+@user_bp.route('/userCard', methods=['GET'])
 def getCardByUser():
     # TODO: Authenticate the User (by JWT)
     bearer = request.headers.get('Authorization')
@@ -16,8 +16,8 @@ def getCardByUser():
     if user_id == 0:
         return jsonify({'success': False, 'message': 'Invalid JWT'}), 400
 
-    user = User(user_id)
-    card = user.getCard()
+    userCard = UserCard(user_id)
+    card = userCard.getCard()
 
     data = card.toJson()
 
@@ -33,7 +33,7 @@ def getCardByUser():
     return jsonify(data)
 
 
-@user_bp.route('/user/card/<concept_id>', methods=['GET'])
+@user_bp.route('/userCard/<concept_id>', methods=['GET'])
 def getCardByConcept(concept_id):
     
     # TODO: Authenticate the User (by JWT)
@@ -46,7 +46,7 @@ def getCardByConcept(concept_id):
 
 
     # TODO: Get the card (CardPicking)
-    user = User(user_id)
+    user = UserCard(user_id)
     card = user.getCardByConcept(concept_id)
 
     data = card.toJson()
@@ -61,7 +61,7 @@ def getCardByConcept(concept_id):
     return jsonify(data)
 
 
-@user_bp.route('/user/feedback/difficulty', methods=['POST'])
+@user_bp.route('/userCard/feedback/difficulty', methods=['POST'])
 def postFeedback():
     # TODO: Validate json (card_id, difficulty)
     
