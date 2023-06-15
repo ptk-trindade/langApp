@@ -1,4 +1,4 @@
-from psycopg2 import sql
+# from psycopg2 import sql
 # generic access to database should be implemented here
 # but more specific ones should be implemented in their respective class folders
 
