@@ -9,3 +9,8 @@ def addComment(card_id: int, user_id: int, text: str, parent_comment_id: int) ->
     # use cursor.lastrowid or connection.insert_id() to get the id of the inserted comment
 
     return None
+
+def getComments(card_id: int) -> list[Comment]:
+    # TODO
+
+    return []

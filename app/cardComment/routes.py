@@ -2,6 +2,7 @@ from flask import jsonify, request, Blueprint
 
 from userAuthentication.userAuthentication import UserAuthentication
 from card.card import Card
+from card.cardComment import CardComment
 from models.comment import Comment
 
 
@@ -25,17 +26,17 @@ def postAddComment():
     if not request.is_json:
         return jsonify({'success': False, 'message': 'Missing JSON in request'}), 400
     
-    if not request.json['card_id']:
-        return jsonify({'success': False, 'message': 'Missing card_id parameter'}), 400
-    
-    if not request.json['user_id']:
-        return jsonify({'success': False, 'message': 'Missing user_id parameter'}), 400
-    
-    if not request.json['text']:
-        return jsonify({'success': False, 'message': 'Missing text parameter'}), 400
-    
-    if not request.json['parent_comment_id']:
-        pass
+    obrigatory_fields = ['card_id', 'user_id', 'text']
+    for field in obrigatory_fields:
+        if field not in request.json:
+            return jsonify({'success': False, 'message': f'Missing {field} parameter'}), 400
+
+    card_id = request.json['card_id']
+    user_id = request.json['user_id']
+    text = request.json['text']
+    parent_comment_id = None
+    if 'parent_comment_id' in request.json:
+        parent_comment_id = request.json['parent_comment_id']
 
     # TODO: Authenticate the User (by JWT)
     auth = UserAuthentication()
@@ -49,7 +50,7 @@ def postAddComment():
     # TODO: Add comment
     card = Card(card_id)
 
-    comment: Comment = addComment(user_id, text, parent_comment_id)
+    comment: Comment = card.addComment(user_id, text, parent_comment_id)
     # Return the created comment
     data = []
     return jsonify(data)
