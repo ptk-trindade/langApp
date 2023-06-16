@@ -1,15 +1,19 @@
-from card.card import Card
+from models.user import User
+from models.card import Card
 
-class UserCard:
+import userCard.db as userCard_db
+
+
+class UserCard(User):
     def __init__(self, user_id):
         self.id = user_id
         
 
     def getCard(self) -> Card:
         
-        # TODO: Get the card
+        card = userCard_db.pickCard(self.id)
 
-        return Card(123, 'Chair', 'Cadeira', False, [{'id': 1, 'name': 'Chair', 'description': 'Used to sit on', 'type': 'word'}])
+        return card
 
     
     def getCardByConcept(self, concept_id) -> Card:
