@@ -14,16 +14,11 @@ class UserAuthentication:
 
     
     def login(self, username: str, password: str):
-        self.username = username
-        self.password = password
-
+        
         # TODO: Validate username and password
         valid = True
 
-        if not valid:
-            return False
-
-        return True
+        return valid
 
 
     def createJwt(self, user_id) -> str:
