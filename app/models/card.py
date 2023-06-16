@@ -18,20 +18,15 @@ class Card:
 
 
     def toJson(self):
-        concepts = [concept.toJson() for concept in self.concepts]
-
-        x = {
-            'concepts': [{'id': 1, 'name': 'Chair', 'description': 'Used to sit on', 'type': 'word'}],
-            'hasAudio': False,
-            'front': 'Chair',
-            'back': 'Cadeira',
-            'card_id': 123
-        }
-
-        return {
+        json = {
+            'card_id': self.id,
             'concepts': [concept.toJson() for concept in self.concepts],
             'hasAudio': self.hasAudio,
             'front': self.front,
             'back': self.back,
-            'card_id': self.id
+            'sourceLanguage_id': self.sourceLanguage_id,
+            'targetLanguage_id': self.targetLanguage_id,
+            'creator_id': self.creator_id
         }
+
+        return json
