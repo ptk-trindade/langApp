@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   db:
-    working_dir: /langApp
+    container_name: db-container
     build:
       context: ./db
       dockerfile: Dockerfile
@@ -18,7 +18,9 @@ services:
       - 5002:5002
     depends_on:
       - db
-    
-
 volumes:
   db_data:
+
+
+
+

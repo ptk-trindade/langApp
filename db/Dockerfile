@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:8.0
 
 # Define as variáveis de ambiente para configuração do MySQL
 ENV MYSQL_DATABASE=langapp
