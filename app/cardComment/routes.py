@@ -1,14 +1,14 @@
 from flask import jsonify, request, Blueprint
 
 from userAuthentication.userAuthentication import UserAuthentication
-from card.card import Card
-from card.cardComment import CardComment
+from models.card import Card
+from cardComment.cardComment import CardComment
 from models.comment import Comment
 
 
 card_bp = Blueprint('card', __name__)
 
-@card_bp.route('/card/<card_id>/comment', methods=['GET'])
+@card_bp.route('/cardComment/<card_id>', methods=['GET'])
 def getComments(card_id: int): # list[Comment]
     
     # TODO: Get comments
@@ -20,7 +20,7 @@ def getComments(card_id: int): # list[Comment]
     return jsonify(data)
 
 
-@card_bp.route('/card/comment', methods=['POST'])
+@card_bp.route('/cardComment', methods=['POST'])
 def postAddComment():
     # Validate json
     if not request.is_json:
@@ -47,11 +47,11 @@ def postAddComment():
         return jsonify({'success': False, 'message': 'Invalid JWT'}), 400
     
 
-    # TODO: Add comment
-    card = Card(card_id)
+    card = CardComment(card_id)
 
     comment: Comment = card.addComment(user_id, text, parent_comment_id)
+
     # Return the created comment
-    data = []
+    data = comment.toJson()
     return jsonify(data)
 
