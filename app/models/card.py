@@ -1,8 +1,6 @@
 from models.concept import Concept
 
 import database.db as db
-import card.db as card_db
-
 
 class Card:
     
